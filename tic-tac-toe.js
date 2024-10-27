@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-// Select all divs inside the board and add the 'square' class
+  // Select all divs inside the board and add the 'square' class
   const squares = document.querySelectorAll("#board div");
   const statusDiv = document.getElementById("status");
+  const newGameButton = document.querySelector(".btn");
   let currentTurn = "X"; // Tracks whether it's X's or O's turn
-  const gameState = Array(9).fill(null); // Array to track the state of each square
+  let gameState = Array(9).fill(null); // Array to track the state of each square
   const winningCombinations = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
@@ -44,6 +45,23 @@ document.addEventListener("DOMContentLoaded", () => {
     square.addEventListener("mouseleave", () => {
       square.classList.remove("hover");
     });
+  });
+
+  // New Game button event listener
+  newGameButton.addEventListener("click", () => {
+    // Clear each square on the board
+    squares.forEach(square => {
+      square.textContent = "";
+      square.classList.remove("X", "O", "hover");
+    });
+
+    // Reset the game state
+    gameState = Array(9).fill(null);
+    currentTurn = "X"; // Optionally, reset the current turn to "X"
+    
+    // Reset the status message
+    statusDiv.textContent = "Move your mouse over a square and click to play an X or an O.";
+    statusDiv.classList.remove("you-won");
   });
 
   // Function to check if the current player has won
